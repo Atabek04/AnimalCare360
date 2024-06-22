@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @Entity
+@Table(name = "health_record")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
