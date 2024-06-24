@@ -4,10 +4,14 @@ import kz.logitex.lab.animalCare360.auth.AuthenticationResponse;
 import kz.logitex.lab.animalCare360.auth.AuthenticationService;
 import kz.logitex.lab.animalCare360.auth.RegisterRequest;
 import kz.logitex.lab.animalCare360.entity.Medication;
+import kz.logitex.lab.animalCare360.entity.User;
 import kz.logitex.lab.animalCare360.service.MedicationServiceImpl;
+import kz.logitex.lab.animalCare360.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/admin")
@@ -15,11 +19,17 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
     private final AuthenticationService authService;
     private final MedicationServiceImpl medicationService;
+    private final UserServiceImpl userService;
 
     @PostMapping("/users")
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request) {
         return ResponseEntity.ok(authService.register(request));
+    }
+
+    @GetMapping("/users")
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
 
     @PostMapping("/medications")

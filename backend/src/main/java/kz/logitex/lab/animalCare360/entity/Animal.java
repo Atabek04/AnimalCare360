@@ -1,6 +1,8 @@
 package kz.logitex.lab.animalCare360.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
+import kz.logitex.lab.animalCare360.config.UserDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,6 +31,7 @@ public class Animal {
 
     private String gender;
 
+    @JsonDeserialize(using = UserDeserializer.class)
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
