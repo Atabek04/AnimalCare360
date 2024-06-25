@@ -1,11 +1,13 @@
 package kz.logitex.lab.animalCare360.service;
 
 import kz.logitex.lab.animalCare360.entity.Animal;
+import kz.logitex.lab.animalCare360.entity.User;
 import kz.logitex.lab.animalCare360.repository.AnimalRepository;
 import kz.logitex.lab.animalCare360.service.interfaces.AnimalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 
 @Service

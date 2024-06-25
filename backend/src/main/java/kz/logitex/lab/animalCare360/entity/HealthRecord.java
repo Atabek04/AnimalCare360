@@ -1,17 +1,21 @@
 package kz.logitex.lab.animalCare360.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "health_record")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class HealthRecord {
 
     @Id
@@ -19,7 +23,7 @@ public class HealthRecord {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "animal_id", nullable = false)
+    @JoinColumn(name = "animal_id")
     private Animal animal;
 
     @Temporal(TemporalType.DATE)
@@ -31,9 +35,14 @@ public class HealthRecord {
 
     private String procedure;
 
+    private String notes;
+
     @ManyToOne
     @JoinColumn(name = "medication_id")
     private Medication medication;
 
-    private String notes;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, date, symptoms, diagnosis, procedure, notes);
+    }
 }

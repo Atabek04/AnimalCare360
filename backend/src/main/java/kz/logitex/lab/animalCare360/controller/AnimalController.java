@@ -1,10 +1,13 @@
 package kz.logitex.lab.animalCare360.controller;
 
 import kz.logitex.lab.animalCare360.entity.Animal;
+import kz.logitex.lab.animalCare360.entity.HealthRecord;
 import kz.logitex.lab.animalCare360.service.AnimalServiceImpl;
+import kz.logitex.lab.animalCare360.service.HealthRecordServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -12,6 +15,7 @@ import java.util.List;
 @RequestMapping("/api/v1/animals")
 public class AnimalController {
     private final AnimalServiceImpl animalService;
+    private final HealthRecordServiceImpl healthRecordService;
 
     @PostMapping
     public Animal addAnimal(@RequestBody Animal animal) {
@@ -37,4 +41,34 @@ public class AnimalController {
     public void deleteAnimal(@PathVariable Long id) {
         animalService.deleteAnimal(id);
     }
+
+    @PostMapping("/{id}/health")
+    public HealthRecord addHealthRecord(@PathVariable Long id, @RequestBody HealthRecord healthRecord) {
+        healthRecord.setAnimal(animalService.getAnimal(id));
+        healthRecord.setDate(new Date());
+        return healthRecordService.addHealthRecord(healthRecord);
+    }
+
+    @GetMapping("/{id}/health")
+    public List<HealthRecord> getHealthRecords(@PathVariable Long id) {
+        return healthRecordService.getHealthRecordsByAnimalId(id);
+    }
+
+    @PutMapping("/{id}/health")
+    public HealthRecord updateHealthRecord(@PathVariable Long id, @RequestBody HealthRecord healthRecord) {
+        return healthRecordService.updateHealthRecord(id, healthRecord);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

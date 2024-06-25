@@ -1,8 +1,8 @@
 package kz.logitex.lab.animalCare360.entity;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+    import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
-import kz.logitex.lab.animalCare360.config.UserDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,8 +13,8 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Animal {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,7 +31,6 @@ public class Animal {
 
     private String gender;
 
-    @JsonDeserialize(using = UserDeserializer.class)
     @ManyToOne
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;

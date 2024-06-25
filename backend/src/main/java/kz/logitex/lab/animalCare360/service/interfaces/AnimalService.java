@@ -1,6 +1,8 @@
 package kz.logitex.lab.animalCare360.service.interfaces;
 
 import kz.logitex.lab.animalCare360.entity.Animal;
+import kz.logitex.lab.animalCare360.entity.User;
+
 
 import java.util.List;
 

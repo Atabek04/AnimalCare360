@@ -18,7 +18,7 @@ public class Treatment {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "animal_id", nullable = false)
+    @JoinColumn(name = "animal_id")
     private Animal animal;
 
     @ManyToOne
