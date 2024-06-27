@@ -42,6 +42,4 @@ public class MedicationController {
             @RequestBody Treatment treatment) {
         return treatmentService.updateTreatment(animalId, treatment);
     }
-
-    
 }

@@ -1,5 +1,6 @@
 package kz.logitex.lab.animalCare360.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,9 +25,11 @@ public class Medication {
 
     private String manufacturer;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "medication")
     private Set<HealthRecord> healthRecords;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "medication")
     private Set<Treatment> treatments;
 }

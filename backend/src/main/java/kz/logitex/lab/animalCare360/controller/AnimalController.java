@@ -58,6 +58,12 @@ public class AnimalController {
     public HealthRecord updateHealthRecord(@PathVariable Long id, @RequestBody HealthRecord healthRecord) {
         return healthRecordService.updateHealthRecord(id, healthRecord);
     }
+
+    // write controller for assigning user to animal
+    @PutMapping("/{animalId}/user/{userId}")
+    public Animal assignUserToAnimal(@PathVariable Long animalId, @PathVariable Long userId) {
+        return animalService.assignUserToAnimal(animalId, userId);
+    }
 }
 
 
