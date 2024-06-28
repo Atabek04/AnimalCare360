@@ -1,8 +1,10 @@
 package kz.logitex.lab.animalCare360.service;
 
 import kz.logitex.lab.animalCare360.entity.Animal;
+import kz.logitex.lab.animalCare360.entity.Medication;
 import kz.logitex.lab.animalCare360.entity.Treatment;
 import kz.logitex.lab.animalCare360.repository.AnimalRepository;
+import kz.logitex.lab.animalCare360.repository.MedicationRepository;
 import kz.logitex.lab.animalCare360.repository.TreatmentRepository;
 import kz.logitex.lab.animalCare360.service.interfaces.TreatmentService;
 import lombok.RequiredArgsConstructor;
@@ -16,19 +18,18 @@ import java.util.Optional;
 public class TreatmentServiceImpl implements TreatmentService {
     private final AnimalRepository animalRepository;
     private final TreatmentRepository treatmentRepository;
+    private final MedicationRepository medicationRepository;
 
     @Override
-    public Treatment addTreatment(Long animalId, Treatment treatment) {
+    public Treatment addTreatment(Long animalId, Long medicationId, Treatment treatment) {
         Optional<Animal> animal = animalRepository.findById(animalId);
-        if (animal.isPresent()) {
-            if (treatment.getMedication() == null) {
-                throw new IllegalArgumentException("Medication cannot be null");
-            }
-
+        Optional<Medication> medication = medicationRepository.findById(medicationId);
+        if (animal.isPresent() && medication.isPresent()) {
             treatment.setAnimal(animal.get());
+            treatment.setMedication(medication.get());
             return treatmentRepository.save(treatment);
         }
-        throw new RuntimeException("Animal not found");
+        throw new RuntimeException("Animal or Medication not found");
     }
 
     @Override

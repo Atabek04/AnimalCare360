@@ -22,7 +22,7 @@ public class Treatment {
     private Animal animal;
 
     @ManyToOne
-    @JoinColumn(name = "medication_id", nullable = false)
+    @JoinColumn(name = "medication_id")
     private Medication medication;
 
     private String dosage;

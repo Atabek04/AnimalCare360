@@ -22,28 +22,38 @@ public class AdminController {
     private final UserServiceImpl userService;
 
     @PostMapping("/users")
-    public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request) {
-        return ResponseEntity.ok(authService.register(request));
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
+        AuthenticationResponse response = authService.register(request);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/users")
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        if (users.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(users);
     }
 
     @PostMapping("/medications")
-    public Medication addMedication(@RequestBody Medication medication) {
-        return medicationService.addMedication(medication);
+    public ResponseEntity<Medication> addMedication(@RequestBody Medication medication) {
+        Medication createdMedication = medicationService.addMedication(medication);
+        return ResponseEntity.ok(createdMedication);
     }
 
     @PutMapping("/medications/{id}")
-    public Medication updateMedication(@PathVariable Long id, @RequestBody Medication medication) {
-        return medicationService.updateMedication(id, medication);
+    public ResponseEntity<Medication> updateMedication(@PathVariable Long id, @RequestBody Medication medication) {
+        Medication updatedMedication = medicationService.updateMedication(id, medication);
+        if (updatedMedication == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(updatedMedication);
     }
 
     @DeleteMapping("/medications/{id}")
-    public void deleteMedication(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteMedication(@PathVariable Long id) {
         medicationService.deleteMedication(id);
+        return ResponseEntity.noContent().build();
     }
 }
