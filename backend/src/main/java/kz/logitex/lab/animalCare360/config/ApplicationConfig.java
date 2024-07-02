@@ -1,5 +1,6 @@
 package kz.logitex.lab.animalCare360.config;
 
+import kz.logitex.lab.animalCare360.auth.CustomOAuth2UserService;
 import kz.logitex.lab.animalCare360.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -12,11 +13,15 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
     private final UserRepository userRepository;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -40,5 +45,10 @@ public class ApplicationConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserService() {
+        return customOAuth2UserService;
     }
 }
